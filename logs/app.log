@@ -1,0 +1,88 @@
+2026-07-18 00:48:11,601 - __main__ - INFO - Database initialized successfully
+2026-07-18 00:48:13,178 - __main__ - INFO - Model loaded successfully
+2026-07-18 00:48:13,293 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.7:5000
+2026-07-18 00:48:13,293 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-07-18 00:48:13,303 - werkzeug - INFO -  * Restarting with stat
+2026-07-18 00:48:15,505 - __main__ - INFO - Database initialized successfully
+2026-07-18 00:48:17,012 - __main__ - INFO - Model loaded successfully
+2026-07-18 00:48:17,020 - werkzeug - WARNING -  * Debugger is active!
+2026-07-18 00:48:17,039 - werkzeug - INFO -  * Debugger PIN: 305-535-506
+2026-07-18 00:49:39,125 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:49:39] "GET / HTTP/1.1" 200 -
+2026-07-18 00:49:39,444 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:49:39] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-07-18 00:49:39,462 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:49:39] "GET /static/js/script.js HTTP/1.1" 200 -
+2026-07-18 00:49:39,984 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:49:39] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-07-18 00:58:33,050 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:58:33] "GET / HTTP/1.1" 200 -
+2026-07-18 00:58:33,214 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:58:33] "GET /static/js/script.js HTTP/1.1" 200 -
+2026-07-18 00:58:33,217 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:58:33] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-07-18 00:58:33,926 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:58:33] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-07-18 00:58:57,737 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:58:57] "GET / HTTP/1.1" 200 -
+2026-07-18 00:58:57,856 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:58:57] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 00:58:57,858 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:58:57] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 00:59:00,951 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:00] "GET /about HTTP/1.1" 200 -
+2026-07-18 00:59:01,064 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:01] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 00:59:01,068 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:01] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 00:59:07,296 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:07] "GET /login HTTP/1.1" 200 -
+2026-07-18 00:59:07,391 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:07] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 00:59:07,394 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:07] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 00:59:12,388 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:12] "GET /register HTTP/1.1" 200 -
+2026-07-18 00:59:12,478 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:12] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 00:59:12,481 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:12] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 00:59:20,708 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:20] "GET /contact HTTP/1.1" 200 -
+2026-07-18 00:59:20,798 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:20] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 00:59:20,798 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:20] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 00:59:30,861 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:30] "GET / HTTP/1.1" 200 -
+2026-07-18 00:59:30,969 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:30] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 00:59:30,969 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 00:59:35,242 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:35] "[32mGET /predict HTTP/1.1[0m" 302 -
+2026-07-18 00:59:35,286 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:35] "GET /login HTTP/1.1" 200 -
+2026-07-18 00:59:35,481 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:35] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 00:59:35,482 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 00:59:35] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:17:06,473 - __main__ - INFO - Database initialized successfully
+2026-07-18 11:17:18,922 - __main__ - INFO - Model loaded successfully
+2026-07-18 11:17:19,006 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.7:5000
+2026-07-18 11:17:19,006 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-07-18 11:17:19,012 - werkzeug - INFO -  * Restarting with stat
+2026-07-18 11:17:21,368 - __main__ - INFO - Database initialized successfully
+2026-07-18 11:17:23,206 - __main__ - INFO - Model loaded successfully
+2026-07-18 11:17:23,224 - werkzeug - WARNING -  * Debugger is active!
+2026-07-18 11:17:23,247 - werkzeug - INFO -  * Debugger PIN: 462-384-243
+2026-07-18 11:19:44,864 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:44] "GET / HTTP/1.1" 200 -
+2026-07-18 11:19:45,197 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:45] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:19:45,255 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:45] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 11:19:45,677 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:45] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-07-18 11:19:55,802 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:55] "GET / HTTP/1.1" 200 -
+2026-07-18 11:19:55,924 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:55] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 11:19:55,928 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:55] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:19:57,160 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:57] "GET /about HTTP/1.1" 200 -
+2026-07-18 11:19:57,277 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:57] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:19:57,277 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:57] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 11:19:58,885 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:58] "GET /login HTTP/1.1" 200 -
+2026-07-18 11:19:58,985 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:58] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 11:19:58,985 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:19:58] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:20:00,413 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:00] "GET /register HTTP/1.1" 200 -
+2026-07-18 11:20:00,517 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:00] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:20:00,523 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:00] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 11:20:01,773 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:01] "GET /contact HTTP/1.1" 200 -
+2026-07-18 11:20:01,879 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:01] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:20:01,882 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:01] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 11:20:03,584 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:03] "GET /about HTTP/1.1" 200 -
+2026-07-18 11:20:03,699 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:03] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 11:20:03,699 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:03] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:20:15,330 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:15] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-07-18 11:20:15,331 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:15] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:20:16,586 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:20:16] "[33mGET /browser-polyfill.js.map HTTP/1.1[0m" 404 -
+2026-07-18 11:26:23,534 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:26:23] "GET / HTTP/1.1" 200 -
+2026-07-18 11:26:23,681 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:26:23] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 11:26:23,691 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:26:23] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:26:32,627 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:26:32] "GET /contact HTTP/1.1" 200 -
+2026-07-18 11:26:32,752 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:26:32] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-07-18 11:26:32,756 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:26:32] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:26:46,990 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:26:46] "GET / HTTP/1.1" 200 -
+2026-07-18 11:26:47,093 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:26:47] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-18 11:26:47,093 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2026 11:26:47] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -

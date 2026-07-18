@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block title %}Model Performance{% endblock %}
+{% block content %}
+<div class="container-fluid py-5">
+    <h1 class="text-gradient mb-5"><i class="fas fa-robot"></i> Model Performance Metrics</h1>
+    
+    {% if model_info %}
+    <div class="row mb-5">
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="stat-card">
+                <div class="stat-number">{{ "%.1f"|format(model_info.accuracy * 100) }}%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="stat-card">
+                <div class="stat-number">{{ "%.1f"|format(model_info.precision * 100) }}%</div>
+                <div class="stat-label">Precision</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="stat-card">
+                <div class="stat-number">{{ "%.1f"|format(model_info.recall * 100) }}%</div>
+                <div class="stat-label">Recall</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="stat-card">
+                <div class="stat-number">{{ "%.1f"|format(model_info.f1_score * 100) }}%</div>
+                <div class="stat-label">F1-Score</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-gradient">
+                    <h5 class="mb-0">Model Information</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Model Type:</strong> {{ model_info.name }}</p>
+                    <p><strong>Training Date:</strong> {{ model_info.training_date[:10] }}</p>
+                    <p><strong>ROC-AUC Score:</strong> {{ "%.4f"|format(model_info.roc_auc) }}</p>
+                    <p><strong>Features:</strong> {{ model_info.feature_names|length }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-gradient">
+                    <h5 class="mb-0">Model Evaluation</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label>Accuracy</label>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar" style="width: {{ model_info.accuracy * 100 }}%; background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);">{{ "%.1f"|format(model_info.accuracy * 100) }}%</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Precision</label>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar" style="width: {{ model_info.precision * 100 }}%; background: linear-gradient(90deg, #10b981 0%, #059669 100%);">{{ "%.1f"|format(model_info.precision * 100) }}%</div>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Recall</label>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar" style="width: {{ model_info.recall * 100 }}%; background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);">{{ "%.1f"|format(model_info.recall * 100) }}%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-gradient">
+                    <h5 class="mb-0">Top Feature Importance</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Feature</th>
+                                <th>Importance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for idx, item in enumerate(model_info.feature_importance[:10], 1) %}
+                            <tr>
+                                <td>{{ idx }}</td>
+                                <td>{{ item[0] }}</td>
+                                <td>
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar" style="width: {{ item[1] * 100 }}%; background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);">{{ "%.2f"|format(item[1] * 100) }}%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-warning">
+        <i class="fas fa-exclamation-triangle"></i> Model information not available. Please train the model first.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

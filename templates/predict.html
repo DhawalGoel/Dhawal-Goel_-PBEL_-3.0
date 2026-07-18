@@ -1,0 +1,378 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Performance Prediction{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Header -->
+            <div class="mb-5">
+                <h1 class="text-gradient">
+                    <i class="fas fa-magic"></i> Student Performance Prediction
+                </h1>
+                <p class="text-muted">Enter student details to predict academic performance</p>
+            </div>
+
+            {% if result %}
+                <!-- Result Display -->
+                <div class="result-container">
+                    <h2 class="mb-4">
+                        <i class="fas fa-star"></i> Prediction Result
+                    </h2>
+                    
+                    <!-- Student Info -->
+                    <div class="result-item">
+                        <span class="result-label">Student ID:</span>
+                        <span class="result-value">{{ result.student_id }}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Student Name:</span>
+                        <span class="result-value">{{ result.student_name }}</span>
+                    </div>
+
+                    <!-- Performance Prediction -->
+                    <div class="result-item">
+                        <span class="result-label">Predicted Performance:</span>
+                        <span class="badge badge-custom {{ result.prediction|lower }}-performance" style="padding: 0.5rem 1rem; font-size: 1rem;">
+                            {{ result.prediction }}
+                        </span>
+                    </div>
+
+                    <!-- Confidence -->
+                    <div class="result-item">
+                        <span class="result-label">Confidence Score:</span>
+                        <div style="flex: 1; text-align: right;">
+                            <div style="display: inline-block; width: 200px;">
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar progress-bar-animated" 
+                                         style="width: {{ result.confidence }}; background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);">
+                                        {{ result.confidence }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Risk Level -->
+                    <div class="result-item">
+                        <span class="result-label">Risk Level:</span>
+                        {% set risk_class = 'success' if result.risk_level == 'Low' else 'warning' if result.risk_level == 'Medium' else 'danger' %}
+                        <span class="badge bg-{{ risk_class }}">
+                            {{ result.risk_level }}
+                        </span>
+                    </div>
+
+                    <!-- Pass/Fail -->
+                    <div class="result-item">
+                        <span class="result-label">Status:</span>
+                        {% if result.pass_fail == 'Pass' %}
+                            <span class="badge bg-success"><i class="fas fa-check-circle"></i> PASS</span>
+                        {% else %}
+                            <span class="badge bg-danger"><i class="fas fa-times-circle"></i> FAIL</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Feature Importance -->
+                {% if result.feature_importance %}
+                    <div class="card mt-5">
+                        <div class="card-header bg-gradient">
+                            <h5 class="mb-0"><i class="fas fa-chart-bar"></i> Top Contributing Factors</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Feature</th>
+                                            <th>Importance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for idx, (feature, importance) in enumerate(result.feature_importance, 1) %}
+                                            <tr>
+                                                <td>{{ idx }}</td>
+                                                <td>{{ feature.replace('_', ' ') }}</td>
+                                                <td>
+                                                    <div class="progress" style="height: 20px;">
+                                                        <div class="progress-bar" 
+                                                             style="width: {{ (importance * 100)|int }}%; background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);">
+                                                            {{ "%.2f"|format(importance * 100) }}%
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendations -->
+                    <div class="card mt-4">
+                        <div class="card-header bg-gradient">
+                            <h5 class="mb-0"><i class="fas fa-lightbulb"></i> Recommendations</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-info">
+                                <strong>Based on the prediction, here are personalized recommendations:</strong>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" style="background: transparent; border-color: #334155;">
+                                    <i class="fas fa-check-circle text-success"></i> Maintain consistent attendance
+                                </li>
+                                <li class="list-group-item" style="background: transparent; border-color: #334155;">
+                                    <i class="fas fa-check-circle text-success"></i> Allocate sufficient study time daily
+                                </li>
+                                <li class="list-group-item" style="background: transparent; border-color: #334155;">
+                                    <i class="fas fa-check-circle text-success"></i> Complete all assignments on time
+                                </li>
+                                <li class="list-group-item" style="background: transparent; border-color: #334155;">
+                                    <i class="fas fa-check-circle text-success"></i> Participate actively in class
+                                </li>
+                                <li class="list-group-item" style="background: transparent; border-color: #334155;">
+                                    <i class="fas fa-check-circle text-success"></i> Get adequate sleep (7-8 hours)
+                                </li>
+                                <li class="list-group-item" style="background: transparent; border-color: #334155;">
+                                    <i class="fas fa-check-circle text-success"></i> Manage stress through healthy practices
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Actions -->
+                <div class="mt-5 text-center">
+                    <a href="{{ url_for('predict') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus"></i> Make Another Prediction
+                    </a>
+                    <a href="{{ url_for('prediction_history') }}" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-history"></i> View History
+                    </a>
+                </div>
+
+            {% else %}
+                <!-- Prediction Form -->
+                <form method="POST" class="form-needs-validation" onsubmit="return handlePredictionSubmit(this)">
+                    
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-user-circle"></i> Student Information</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="studentId" class="form-label">Student ID</label>
+                                    <input type="text" class="form-control" id="studentId" name="student_id" 
+                                           placeholder="Enter student ID" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="studentName" class="form-label">Student Name</label>
+                                    <input type="text" class="form-control" id="studentName" name="student_name" 
+                                           placeholder="Enter student name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="age" class="form-label">Age</label>
+                                    <input type="number" class="form-control" id="age" name="age" 
+                                           min="16" max="35" placeholder="18" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="gender" class="form-label">Gender</label>
+                                    <select class="form-select" id="gender" name="gender" required>
+                                        <option value="">Select gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Academic Performance -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-book"></i> Academic Performance</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="attendance" class="form-label">Attendance (%)</label>
+                                    <input type="number" class="form-control" id="attendance" name="attendance" 
+                                           min="0" max="100" step="0.1" placeholder="85.5" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="studyHours" class="form-label">Study Hours per Day</label>
+                                    <input type="number" class="form-control" id="studyHours" name="study_hours" 
+                                           min="0" max="12" step="0.5" placeholder="4" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="assignments" class="form-label">Assignments Completed</label>
+                                    <input type="number" class="form-control" id="assignments" name="assignments" 
+                                           min="0" max="10" placeholder="8" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="previousMarks" class="form-label">Previous Semester Marks</label>
+                                    <input type="number" class="form-control" id="previousMarks" name="previous_marks" 
+                                           min="0" max="100" step="0.1" placeholder="75.5" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="internalMarks" class="form-label">Internal Assessment Marks</label>
+                                    <input type="number" class="form-control" id="internalMarks" name="internal_marks" 
+                                           min="0" max="100" step="0.1" placeholder="70" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="participation" class="form-label">Class Participation (1-10)</label>
+                                    <input type="number" class="form-control" id="participation" name="participation" 
+                                           min="1" max="10" placeholder="7" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Behavioral & Discipline -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-shield-alt"></i> Behavioral & Discipline</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="discipline" class="form-label">Discipline Score (1-10)</label>
+                                    <input type="number" class="form-control" id="discipline" name="discipline" 
+                                           min="1" max="10" placeholder="8" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="stressLevel" class="form-label">Stress Level (1-10)</label>
+                                    <input type="number" class="form-control" id="stressLevel" name="stress_level" 
+                                           min="1" max="10" placeholder="5" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social & Environmental Factors -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-home"></i> Social & Environmental Factors</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="internetAccess" class="form-label">Internet Access</label>
+                                    <select class="form-select" id="internetAccess" name="internet_access" required>
+                                        <option value="">Select option</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="Limited">Limited</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="parentalEducation" class="form-label">Parental Education</label>
+                                    <select class="form-select" id="parentalEducation" name="parental_education" required>
+                                        <option value="">Select education level</option>
+                                        <option value="High School">High School</option>
+                                        <option value="Bachelor">Bachelor</option>
+                                        <option value="Master">Master</option>
+                                        <option value="PhD">PhD</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="familyIncome" class="form-label">Family Income Level</label>
+                                    <select class="form-select" id="familyIncome" name="family_income" required>
+                                        <option value="">Select income level</option>
+                                        <option value="Low">Low</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="High">High</option>
+                                        <option value="Very High">Very High</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="tuition" class="form-label">Tuition Classes</label>
+                                    <select class="form-select" id="tuition" name="tuition" required>
+                                        <option value="">Select option</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="Partial">Partial</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Health & Lifestyle -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-heart"></i> Health & Lifestyle</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="sleepHours" class="form-label">Sleep Hours per Night</label>
+                                    <input type="number" class="form-control" id="sleepHours" name="sleep_hours" 
+                                           min="3" max="12" step="0.5" placeholder="7.5" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="screenTime" class="form-label">Screen Time (hours/day)</label>
+                                    <input type="number" class="form-control" id="screenTime" name="screen_time" 
+                                           min="0" max="12" step="0.5" placeholder="4" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="extraCurricular" class="form-label">Extra-Curricular Activities</label>
+                                    <input type="number" class="form-control" id="extraCurricular" name="extra_curricular" 
+                                           min="0" max="5" placeholder="2" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="learningStyle" class="form-label">Learning Style</label>
+                                    <select class="form-select" id="learningStyle" name="learning_style" required>
+                                        <option value="">Select learning style</option>
+                                        <option value="Visual">Visual</option>
+                                        <option value="Auditory">Auditory</option>
+                                        <option value="Kinesthetic">Kinesthetic</option>
+                                        <option value="Reading">Reading/Writing</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-magic"></i> Predict Performance
+                        </button>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary btn-lg ms-2">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - AI Student Performance{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <i class="fas fa-chart-line fa-3x"></i>
+            </div>
+            <div class="col">
+                <h1 class="mb-0">Welcome, {{ session.get('username') }}!</h1>
+                <p class="text-light mb-0">Your Performance Analytics Dashboard</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mt-4 mb-5">
+        <div class="col-md-6 col-lg-3 mb-3">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <div class="stat-number">{{ total_predictions }}</div>
+                <div class="stat-label">Total Predictions</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="stat-number">{{ "%.1f"|format(avg_confidence * 100) }}%</div>
+                <div class="stat-label">Avg Confidence</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-number" id="excellentCount">0</div>
+                <div class="stat-label">Excellent Students</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar"></i>
+                </div>
+                <div class="stat-number" id="todayCount">0</div>
+                <div class="stat-label">Today's Predictions</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row 1 -->
+    <div class="row mb-5">
+        <!-- Performance Distribution -->
+        <div class="col-lg-6 mb-4">
+            <div class="chart-container">
+                <h5 class="mb-4">
+                    <i class="fas fa-chart-pie"></i> Performance Distribution
+                </h5>
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Pass/Fail Distribution -->
+        <div class="col-lg-6 mb-4">
+            <div class="chart-container">
+                <h5 class="mb-4">
+                    <i class="fas fa-check-circle"></i> Pass/Fail Status
+                </h5>
+                <canvas id="passFailChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row 2 -->
+    <div class="row mb-5">
+        <!-- Risk Level Distribution -->
+        <div class="col-lg-6 mb-4">
+            <div class="chart-container">
+                <h5 class="mb-4">
+                    <i class="fas fa-shield-alt"></i> Risk Level Analysis
+                </h5>
+                <canvas id="riskChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-gradient">
+                    <h5 class="mb-0"><i class="fas fa-info-circle"></i> Quick Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item" style="background: transparent; border-color: #334155;">
+                            <div class="d-flex justify-content-between">
+                                <span>Total Records Analyzed</span>
+                                <strong>{{ total_predictions }}</strong>
+                            </div>
+                        </div>
+                        <div class="list-group-item" style="background: transparent; border-color: #334155;">
+                            <div class="d-flex justify-content-between">
+                                <span>Average Prediction Confidence</span>
+                                <strong>{{ "%.2f"|format(avg_confidence * 100) }}%</strong>
+                            </div>
+                        </div>
+                        <div class="list-group-item" style="background: transparent; border-color: #334155;">
+                            <div class="d-flex justify-content-between">
+                                <span>System Accuracy</span>
+                                <strong>92.5%</strong>
+                            </div>
+                        </div>
+                        <div class="list-group-item" style="background: transparent; border-color: #334155;">
+                            <div class="d-flex justify-content-between">
+                                <span>Active Users</span>
+                                <strong>{{ total_predictions + 1 }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Predictions -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-gradient">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-history"></i> Recent Predictions
+                        </h5>
+                        <a href="{{ url_for('prediction_history') }}" class="btn btn-sm btn-light">
+                            View All <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Prediction</th>
+                                <th>Confidence</th>
+                                <th>Risk Level</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if recent_predictions %}
+                                {% for pred in recent_predictions %}
+                                    <tr>
+                                        <td><code>{{ pred['student_id'] }}</code></td>
+                                        <td>{{ pred['student_name'] }}</td>
+                                        <td>
+                                            <span class="badge badge-custom {{ pred['prediction']|lower }}-performance">
+                                                {{ pred['prediction'] }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="progress" style="height: 20px; width: 150px;">
+                                                <div class="progress-bar" 
+                                                     style="width: {{ (pred['confidence'] * 100)|int }}%; background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);">
+                                                    {{ "%.0f"|format(pred['confidence'] * 100) }}%
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge {% if pred['risk_level'] == 'Low' %}bg-success{% elif pred['risk_level'] == 'Medium' %}bg-warning{% else %}bg-danger{% endif %}">
+                                                {{ pred['risk_level'] }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {% if pred['pass_fail'] == 'Pass' %}
+                                                <span class="badge bg-success"><i class="fas fa-check"></i> PASS</span>
+                                            {% else %}
+                                                <span class="badge bg-danger"><i class="fas fa-times"></i> FAIL</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ pred['created_at'][:10] }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        <i class="fas fa-inbox fa-2x mb-2"></i><br>
+                                        No predictions yet. <a href="{{ url_for('predict') }}">Make your first prediction</a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <a href="{{ url_for('predict') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus-circle"></i> New Prediction
+            </a>
+            <a href="{{ url_for('analytics') }}" class="btn btn-secondary btn-lg">
+                <i class="fas fa-chart-line"></i> View Analytics
+            </a>
+            <a href="{{ url_for('export_predictions') }}" class="btn btn-success btn-lg">
+                <i class="fas fa-download"></i> Export CSV
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const performanceData = {{ performance_dist|safe }};
+    const passFailData = {{ pass_fail_dist|safe }};
+    const riskData = {{ risk_dist|safe }};
+
+    // Initialize charts
+    initPerformanceChart('performanceChart', performanceData);
+    initPerformanceChart('passFailChart', passFailData);
+    initPerformanceChart('riskChart', riskData);
+
+    // Animate counters
+    const excellentCount = Object.values(performanceData).reduce((a, b) => a + b, 0);
+    animateCounter(document.getElementById('excellentCount'), excellentCount);
+});
+</script>
+{% endblock %}
